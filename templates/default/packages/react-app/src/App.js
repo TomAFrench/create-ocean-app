@@ -17,6 +17,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
@@ -24,7 +25,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import oceanLogoLight from './assets/oceanLogoLight.svg'
 import oceanLogoDark from './assets/oceanLogoDark.svg'
 
-import { Button } from '@material-ui/core';
+import consumeAsset from './utils/consume'
 
 let web3
 
@@ -236,34 +237,6 @@ const SearchResults = ({ocean, search, query}) => {
     }
   }
 
-  const consumeAsset = async (ddo) => {
-    try {
-      // get all accounts
-      const accounts = await ocean.accounts.list()
-      // get our registered asset
-      const consumeAsset = ddo
-      // get service we want to execute
-      const service = consumeAsset.findServiceByType('access')
-      // order service agreement
-      const agreement = await ocean.assets.order(
-        consumeAsset.id,
-        service.index,
-        accounts[0]
-      )
-      // consume it
-      await ocean.assets.consume(
-        agreement,
-        consumeAsset.id,
-        service.index,
-        accounts[0],
-        '',
-        0
-      )
-    } catch (error) {
-      console.error(error.message)
-    }
-  }
-
   const { results } = search
   
   // If the search has failed to find any results then display failure
@@ -314,7 +287,7 @@ const SearchResults = ({ocean, search, query}) => {
               <TableCell align="center">{fromWei(price)}&nbsp;OCEAN</TableCell>
               <TableCell align="right">{getDataSize(files)}&nbsp;Bytes</TableCell>
               <TableCell align="right">
-                <Button color="primary" variant="contained" onClick={() => consumeAsset(ddo) }>
+                <Button color="primary" variant="contained" onClick={() => consumeAsset(ocean, ddo) }>
                   Consume
                 </Button>
               </TableCell>
