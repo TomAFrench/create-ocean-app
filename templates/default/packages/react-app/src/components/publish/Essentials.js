@@ -7,7 +7,7 @@ import filesize from 'filesize'
 import Dotdotdot from 'react-dotdotdot'
 import axios from 'axios'
 
-const Ipfs = lazy(() => import('../IPFS'))
+const Ipfs = lazy(() => import('../IpfsDropzone'))
 
 const buttons = [
   {
@@ -140,10 +140,10 @@ class ItemForm extends PureComponent{
                 required
                 id="url"
                 name="url"
-                label="Url"
+                label="URL"
                 value={url}
                 onChange={this.handleChangeUrl}
-                placeholder="e.g. Shapes of Desert Plants"
+                placeholder="e.g. https://file.com/file.json"
                 fullWidth
               />
 
