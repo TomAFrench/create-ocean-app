@@ -21,7 +21,6 @@ import Button from '@material-ui/core/Button';
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-// import asset from './asset'
 import oceanLogoLight from './assets/oceanLogoLight.svg'
 import oceanLogoDark from './assets/oceanLogoDark.svg'
 
