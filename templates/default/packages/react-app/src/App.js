@@ -3,6 +3,8 @@ import { Ocean } from '@oceanprotocol/squid'
 import Web3 from 'web3'
 import { fromWei } from 'web3-utils'
 
+import filesize from 'filesize'
+
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -23,6 +25,8 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import oceanLogoLight from './assets/oceanLogoLight.svg'
 import oceanLogoDark from './assets/oceanLogoDark.svg'
+
+import Publish from './components/publish'
 
 import consumeAsset from './utils/consume'
 
@@ -99,22 +103,6 @@ const App = (props) => {
     }
     getOcean()
   }, [])
-
-  // const registerAsset = async () => {
-  //   try {
-  //     const accounts = await ocean.accounts.list()
-  //     const ddo = await ocean.assets.create(asset, accounts[0])
-  //     console.log('Asset successfully submitted.')
-  //     console.log(ddo)
-  //     // keep track of this registered asset for consumption later on
-  //     setDdo(ddo)
-  //     alert(
-  //       'Asset successfully submitted. Look into your console to see the response DDO object.'
-  //     )
-  //   } catch (error) {
-  //     console.error(error.message)
-  //   }
-  // }
 
   const searchAssets = async (searchText) => {
     try {
@@ -211,15 +199,18 @@ const App = (props) => {
           />
           </Grid>
       </Grid>
+      <Publish ocean={ocean}/>
     </main>
     </>
   )
 }
 
 function getDataSize (files) {
-  return files
+  const totalContentLength = files
     .map(file => parseInt(file.contentLength))
     .reduce((total, fileSize) => total + fileSize, 0)
+
+  return parseInt(totalContentLength) ? filesize(totalContentLength) : "UNKNOWN"
 }
 
 const SearchResults = ({ocean, search, query}) => {
@@ -284,7 +275,7 @@ const SearchResults = ({ocean, search, query}) => {
               </TableCell>
               <TableCell align="right">{description || "No Description"}</TableCell>
               <TableCell align="center">{fromWei(price)}&nbsp;OCEAN</TableCell>
-              <TableCell align="right">{getDataSize(files)}&nbsp;Bytes</TableCell>
+              <TableCell align="right">{getDataSize(files)}</TableCell>
               <TableCell align="right">
                 <Button color="primary" variant="contained" onClick={() => consumeAsset(ocean, ddo) }>
                   Consume
