@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create Eth App](https://github.com/paulrberg/create-eth-app) and the [Ocean Template](https://github.com/PaulRBerg/create-eth-app/tree/develop/templates/ocean).
+This project was bootstrapped with [Create Ocean App](https://github.com/TomAFrench/create-ocean-app) and the [Default Template](https://github.com/TomAFrench/create-ocean-app/tree/develop/templates/default).
 
 This template contains two packages:
 

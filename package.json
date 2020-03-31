@@ -1,7 +1,7 @@
 {
   "name": "create-ocean-app",
   "description": "Create Ocean-powered React apps with one command",
-  "version": "1.1.0",
+  "version": "0.1.0",
   "author": {
     "name": "Tom French"
   },
@@ -9,7 +9,7 @@
     "create-ocean-app": "./dist/index.js"
   },
   "bugs": {
-    "url": "https://github.com/TomAFrench/create-eth-app/issues"
+    "url": "https://github.com/TomAFrench/create-ocean-app/issues"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.4",
@@ -46,7 +46,7 @@
   "files": [
     "/dist"
   ],
-  "homepage": "https://github.com/TomAFrench/create-eth-app",
+  "homepage": "https://github.com/TomAFrench/create-ocean-app",
   "keywords": [
     "ethereum",
     "ocean",
@@ -58,7 +58,7 @@
   "main": "./dist/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/TomAFrench/create-eth-app"
+    "url": "https://github.com/TomAFrench/create-ocean-app"
   },
   "scripts": {
     "build": "ncc build ./src/index.ts --out dist/",

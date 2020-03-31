@@ -3,7 +3,7 @@
 Create Ocean-powered React apps with one command.
 
 Create Ocean App works on macOS, Windows, and Linux.<br>
-If something doesn’t work, please [file an issue](https://github.com/TomAFrench/create-eth-app/issues/new).<br>
+If something doesn’t work, please [file an issue](https://github.com/TomAFrench/create-ocean-app/issues/new).<br>
 If you have questions or need help, please ask in our [Discord](https://discord.gg/) community.
 
 ## Quick Overview
@@ -41,7 +41,7 @@ _[`yarn create <starter-kit-package>`](https://yarnpkg.com/lang/en/docs/cli/crea
 
 It will create a directory called `my-ocean-app` inside the current folder.<br>
 
-Inside that directory, it will generate the initial project structure, assuming you did not provide a custom [template](https://github.com/TomAFrench/create-eth-app#templates):
+Inside that directory, it will generate the initial project structure, assuming you did not provide a custom [template](https://github.com/TomAFrench/create-ocean-app#templates):
 
 ```
 my-ocean-app
@@ -85,7 +85,7 @@ cd my-ocean-app
 
 Inside the newly created project, you can run some built-in commands:
 
-### Templates
+<!-- ### Templates
 
 Create Ocean App comes with a host of decentralized finance templates with pre-filled contract ABIs and addresses. Peek into the [templates](/templates) folder to see what options are available and pass the name of the folder as the value for the `--template` argument.
 
@@ -93,7 +93,7 @@ As an example:
 
 ```sh
 yarn create ocean-app my-ocean-app --with-template compound
-```
+``` -->
 
 ## Packages
 
@@ -127,14 +127,14 @@ Your React app is ready to be deployed.
 
 ## How to Update to New Versions?
 
-If you're using the `yarn create eth-app` shorthand (the recommended approach), Yarn will automatically update Create Eth
+If you're using the `yarn create ocean-app` shorthand (the recommended approach), Yarn will automatically update Create Eth
 App for you.<br/>
 
 Otherwise, you will receive a warning in the shell with the instructions for how to update:
 
 ```
-A new version of `create-eth-app` is available!
-You can update by running: yarn global add create-eth-app
+A new version of `create-ocean-app` is available!
+You can update by running: yarn global add create-ocean-app
 ```
 
 ## Philosophy
@@ -142,11 +142,7 @@ You can update by running: yarn global add create-eth-app
 - **Minimalistic by design:** You are one command away from creating a new Ocean-powered React app. No intermediary installs, scripts or shims.
 
 - **End-to-End**: Create Ocean App provides you everything that you need to build and maintain an Ocean-powered React app
-  at scale, by bringing Yarn Workspaces, Create React App and The Graph under one roof
-
-- **Aimed at Experience Architects**: As Kames CG argues in [Ethereum Growth's Problem](https://medium.com/horizin/ethereums-growth-problem-5cab86734917),   the Ethereum ecosystem is in a much greater need for top-notch product creators, not smart contract developers. Create Ocean App does
-  not enable a smart contract development environment, expecting you to import your own ABIs or build on top of
-  an established protocol like [Maker](https://makerdao.com), [Compound](https://compound.finance/) or [Sablier](https://sablier.finance)
+  at scale, by bringing Yarn Workspaces, Create React App and Ocean Protocol under one roof
 
 - **Not Reinventing The Wheel**: Under the hood, you use Create React App, one of the most popular and battle-tested frontend development
   environments.
@@ -159,8 +155,6 @@ Your environment will have everything you need to build a modern Ethereum-powere
 - Everything included with [Create React
   App](https://github.com/facebook/create-react-app/blob/master/README.md#whats-included): React, JSX, ES6, TypeScript
   and Flow syntax support
-- Template subgraph that indexes the events emitted by an
-  [ERC-20](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md) contract
 - Minimalist structure for managing the smart contract [ABIs](https://ethereum.stackexchange.com/questions/234/what-is-an-abi-and-why-is-it-needed-to-interact-with-contracts) and addresses
 - Hassle-free updates for the above tools with a single dependency
 
@@ -168,21 +162,20 @@ Your environment will have everything you need to build a modern Ethereum-powere
 
 This project exists thanks to all the people who contributed:
 
+- [@TomAFrench](https://github.com/tomafrench)
+
+Along with the creators of create-eth-app
+
 - [@PaulRBerg](https://github.com/paulrberg)
 - [@KadenZipfel](https://github.com/kadenzipfel)
 
 ## Acknowledgements
 
-We are grateful to the authors of existing related projects from which we drew inspiration:
+We are grateful to the authors of existing related projects upon which create-ocean-app is based:
 
-- [create-react-app](https://github.com/facebook/create-react-app)
-- [create-next-app](https://github.com/zeit/next.js/tree/master/packages/create-next-app)
-
-We also thank OpenZeppelin for providing us with a secure library of open-source smart contracts:
-
-- [cea-contracts](https://github.com/paulrberg/cea-contracts)
+- [create-eth-app](https://github.com/paulrberg/create-eth-app)
 
 ## License
 
-Create Eth App is open source software [licensed as
-MIT](https://github.com/TomAFrench/create-eth-app/blob/develop/LICENSE).
+Create Ocean App is open source software [licensed as
+MIT](https://github.com/TomAFrench/create-ocean-app/blob/develop/LICENSE).
