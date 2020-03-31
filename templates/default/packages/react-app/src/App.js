@@ -64,7 +64,6 @@ const useStyles = makeStyles((theme) => ({
   },
   accountIcon: {
     marginRight: theme.spacing(1),
-    color: "lime"
   }
 }));
 
@@ -154,12 +153,9 @@ const App = (props) => {
                       </Typography>
                     </>
                   ):(
-                    <>
-                      <AccountCircleIcon color="error"/>
-                      <Typography color="inherit" className={classes.address}>
-                        No account found!
-                      </Typography>
-                    </>
+                    <Typography color="inherit" className={classes.address}>
+                      No account found!
+                    </Typography>
                   )
                 }
                 <Button color="secondary" variant="contained" >

@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { grey, pink } from '@material-ui/core/colors';
 
 import "./index.css";
 import App from "./App";
@@ -9,9 +8,11 @@ import App from "./App";
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: grey[900]
+      main: '#141414'
     },
-    secondary: pink,
+    secondary: {
+      main: '#7b1173'
+    }
   },
 });
 
