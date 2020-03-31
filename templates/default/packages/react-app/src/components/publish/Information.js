@@ -54,7 +54,9 @@ export default function Information( { description, setDescription, categories, 
             value={description}
             onChange={(event) => setDescription(event.target.value)}
             fullWidth
-            multiline />
+            multiline
+            rowsMax="6"
+            />
         </Grid>
         <Grid item>
           <TextField

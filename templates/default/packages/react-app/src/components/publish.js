@@ -60,42 +60,48 @@ export default function Publish({ocean}) {
     setActiveStep(activeStep - 1);
   };
 
-  const renderActiveStep = (step) => {
-    switch (step) {
-      case 0:
-        return <Essentials
-                title={title}
-                setTitle={setTitle}
-                files={files}
-                setFiles={setFiles}
-                />;
-      case 1:
-        return <Information
-                description={description}
-                setDescription={setDescription}
-                categories={categories}
-                setCategories={setCategories}
-                creationDate={creationDate}
-                setCreationDate={setCreationDate}
-                />;
-      case 2:
-        return <Authorship
-                author={author}
-                setAuthor={setAuthor}
-                copyrightHolder={copyrightHolder}
-                setCopyrightHolder={setCopyrightHolder}
-                license={license}
-                setLicense={setLicense}
-                />;
-      case 3:
-        const assetInfo = { title, files, description, categories, creationDate, author, copyrightHolder, license }
-        return <Register
-                  ocean={ocean}
-                  assetInfo={assetInfo}
-                />;
-      default:
-        throw new Error('Unknown step');
-    }
+  let activeStepComponent
+  if (activeStep === 0){
+    activeStepComponent = (
+      <Essentials
+        title={title}
+        setTitle={setTitle}
+        files={files}
+        setFiles={setFiles}
+        />
+    )
+  } else if (activeStep === 1){
+    activeStepComponent = (
+      <Information
+        description={description}
+        setDescription={setDescription}
+        categories={categories}
+        setCategories={setCategories}
+        creationDate={creationDate}
+        setCreationDate={setCreationDate}
+        />
+    )
+  } else if (activeStep === 2){
+    activeStepComponent = (
+      <Authorship
+        author={author}
+        setAuthor={setAuthor}
+        copyrightHolder={copyrightHolder}
+        setCopyrightHolder={setCopyrightHolder}
+        license={license}
+        setLicense={setLicense}
+        />
+      )
+  } else if (activeStep === 3){
+    const assetInfo = { title, files, description, categories, creationDate, author, copyrightHolder, license }
+    activeStepComponent = (
+      <Register
+        ocean={ocean}
+        assetInfo={assetInfo}
+      />
+    )
+  } else {
+    throw new Error('Unknown step');
   }
 
   console.log(title)
@@ -122,21 +128,24 @@ export default function Publish({ocean}) {
         </>
       ) : (
         <>
-          {renderActiveStep(activeStep)}
+          {activeStepComponent}
           <div className={classes.buttons}>
             {activeStep !== 0 && (
               <Button onClick={handleBack} className={classes.button}>
                 Back
               </Button>
             )}
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleNext}
-              className={classes.button}
-            >
-              {activeStep === steps.length - 1 ? 'Register Asset' : 'Next'}
-            </Button>
+            {activeStep !== steps.length - 1 && (
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleNext}
+                className={classes.button}
+              >
+                Next
+              </Button>
+            )}
+
           </div>
         </>
       )}

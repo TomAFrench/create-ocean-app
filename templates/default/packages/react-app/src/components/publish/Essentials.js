@@ -135,7 +135,8 @@ class ItemForm extends PureComponent{
       const { url, hasError, noUrl } = this.state
 
       return (
-          <div >
+        <Grid item container spacing={3}>
+          <Grid item xs={8}>
               <TextField
                 required
                 id="url"
@@ -146,7 +147,8 @@ class ItemForm extends PureComponent{
                 placeholder="e.g. https://file.com/file.json"
                 fullWidth
               />
-
+          </Grid>
+          <Grid item xs={4}>
               <Button onClick={(e: Event) => this.handleSubmit(e)}>
                   Add File
               </Button>
@@ -161,13 +163,15 @@ class ItemForm extends PureComponent{
                       Please enter a valid URL.
                   </span>
               )}
-          </div>
+          </Grid>
+        </Grid>
       )
     }
 }
 
-export default function AddressForm({title, setTitle, files, setFiles}) {
+export default function Essentials({title, setTitle, files, setFiles}) {
   const [open, setOpen] = useState(false)
+  console.log({title, setTitle, files, setFiles})
 
   // for canceling axios requests
   const signal = axios.CancelToken.source()
@@ -189,59 +193,63 @@ export default function AddressForm({title, setTitle, files, setFiles}) {
 
 
     const file = await getFile(url)
-    file && setFiles([file])
+    setFiles([file])
     setOpen(false)
-}
-
-const getFile = async (url) => {
-  const file: FilePublish = {
-      url,
-      contentType: '',
-      found: false // non-standard
   }
 
-  try {
-      const { headers, status } = await axios({
-        method: 'GET',
-        url: url,
-        cancelToken: signal.token
-      })
+  const getFile = async (url) => {
+    const file = {
+        url,
+        contentType: '',
+        found: false // non-standard
+    }
 
-      let contentLength
-      let contentType
-      let found = status.toString().startsWith('2') || status.toString().startsWith('416')
-      if ( headers['content-range'] && !headers['content-length'] ) {
-          const size = headers['content-range'].split('/')[1]
-          contentLength = parseInt(size) // convert to number
-      }
-      if (headers['content-type']) {
-        contentType = headers['content-type'].split(';')[0]
-      }
+    try {
+        const { headers, status } = await axios({
+          method: 'GET',
+          url: url,
+          cancelToken: signal.token
+        })
 
-      
-      if (contentLength) file.contentLength = contentLength
-      if (contentType) {
-          file.contentType = contentType
-          file.compression = cleanupContentType(contentType)
-      }
+        let contentLength
+        let contentType
+        let found = status.toString().startsWith('2') || status.toString().startsWith('416')
+        if ( headers['content-range'] && !headers['content-length'] ) {
+            const size = headers['content-range'].split('/')[1]
+            contentLength = parseInt(size) // convert to number
+        }
+        if (headers['content-type']) {
+          contentType = headers['content-type'].split(';')[0]
+        }
 
-      file.found = found
+        
+        if (contentLength) file.contentLength = contentLength
+        if (contentType) {
+            file.contentType = contentType
+            file.compression = cleanupContentType(contentType)
+        }
 
-      return file
-  } catch (error) {
-      !axios.isCancel(error) && console.error(error.message)
+        file.found = found
+
+        return file
+    } catch (error) {
+        !axios.isCancel(error) && console.error(error.message)
+    }
   }
-}
 
-  const removeFile = (index) => {
-    setFiles(files.splice(index, 1))
+  function removeFile(index) {
+    console.log(files, index)
+    const fileCopy = files
+    const deleted = fileCopy.splice(index, 1)
+    console.log(fileCopy)
+    setFiles(fileCopy)
   }
 
   const toggleForm = (form) => {
     // Toggle to provided form.
     // close form if toggling to itself.
     setOpen(open !== form && form)
-}
+  }
 
   return (
     <>
@@ -261,27 +269,15 @@ const getFile = async (url) => {
             fullWidth
           />
         </Grid>
-      </Grid>
-      <input
-        type="hidden"
-        // name={name}
-        value={JSON.stringify(files)}
-        // onChange={onChange}
-        data-testid="files"
-      />
-        <div >
-            {files.length > 0 && (
-                <ul >
-                    {files.map((item, index) => (
-                        <Item
-                            key={index}
-                            item={item}
-                            removeFile={() => this.removeFile(index)}
-                        />
-                    ))}
-                </ul>
-            )}
-
+        <Grid item xs={12}>
+          <input
+          type="hidden"
+          // name={name}
+          value={JSON.stringify(files)}
+          // onChange={onChange}
+          data-testid="files"
+        />
+          <div >
             {buttons.map(button => {
                 const isActive = button.id === open
                 return (
@@ -306,7 +302,20 @@ const getFile = async (url) => {
                   :
                   null
               }
-        </div>
+          {files.length > 0 && (
+            <ul >
+                {files.map((item, index) => (
+                    <Item
+                        key={index}
+                        item={item}
+                        removeFile={() => removeFile(index)}
+                    />
+                ))}
+            </ul>
+          )}
+          </div>
+        </Grid>
+      </Grid>
     </>
   );
 }

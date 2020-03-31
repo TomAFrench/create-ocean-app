@@ -1,6 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import { Grid } from '@material-ui/core';
 
 const createNewAsset = (assetInfo) => {
   return {
@@ -42,26 +43,32 @@ const registerAsset = async (ocean, asset) => {
 export default function Register({ ocean, assetInfo }) {
   console.log(assetInfo)
   return (
-    <>
-      <Typography variant="h6" gutterBottom>
-        Register
-      </Typography>
-      <Typography gutterBottom>
-        Splendid, we got all the data. Now let's register your data set.
+    <Grid item container spacing={3} direction="column">
+      <Grid item>
+        <Typography variant="h6" gutterBottom>
+          Register
+        </Typography>
+      </Grid>   
+      <Grid item>
+        <Typography gutterBottom>
+          Splendid, we've got all the data. Now let's register your data set.
 
-        After clicking the button below you will be asked by your wallet to sign this request.
-      </Typography>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => {
-          const asset = createNewAsset(assetInfo)
-          registerAsset(ocean, asset)
-        }}
-        // className={classes.button}
-        >
-        Register Asset
-      </Button>
-    </>
+          After clicking the button below you will be asked by your wallet to sign this request.
+        </Typography>
+      </Grid>
+      <Grid item>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            const asset = createNewAsset(assetInfo)
+            registerAsset(ocean, asset)
+          }}
+          // className={classes.button}
+          >
+          Register Asset
+        </Button>
+      </Grid>
+    </Grid>
   );
 }
