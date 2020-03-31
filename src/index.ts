@@ -6,7 +6,7 @@ import prompts from "prompts";
 import updateCheck from "update-check";
 
 import packageJson from "../package.json";
-import { createEthApp } from "./createEthApp";
+import { createOceanApp } from "./createOceanApp";
 import { validateNpmName } from "./helpers/validatePkg";
 
 let projectPath: string = "";
@@ -22,7 +22,7 @@ const program: Commander.Command = new Commander.Command(packageJson.name)
     "-t, --template <name>|<github-url>",
     `
   A custom template to bootstrap the app with. You can use a template
-  from the official Create Eth App repo.
+  from the official Create Ocean App repo.
 `,
   )
   .allowUnknownOption()
@@ -35,7 +35,7 @@ async function run() {
 
   if (!projectPath) {
     const res: prompts.Answers<string> = await prompts({
-      initial: "my-app",
+      initial: "my-ocean-app",
       message: "What is your project named?",
       name: "path",
       type: "text",
@@ -78,9 +78,9 @@ async function run() {
     process.exit(1);
   }
 
-  await createEthApp({
+  await createOceanApp({
     appPath: resolvedProjectPath,
-    template: (typeof program.template === "string" && program.template.trim()) || undefined,
+    template: (typeof program.template === "string" && program.template.trim()) || "default",
   });
 }
 
@@ -91,8 +91,8 @@ async function notifyUpdate() {
     const res: { latest: boolean } = await update;
     if (res?.latest) {
       console.log();
-      console.log(chalk.yellow.bold("A new version of `create-eth-app` is available!"));
-      console.log("You can update by running: yarn global add create-eth-app");
+      console.log(chalk.yellow.bold("A new version of `create-ocean-app` is available!"));
+      console.log("You can update by running: yarn global add create-ocean-app");
       console.log();
     }
   } catch {

@@ -11,21 +11,14 @@ export type RepoInfo = {
 
 export function downloadAndExtractTemplate(root: string, name: string): Promise<void> {
   return promisePipe(
-    got.stream("https://codeload.github.com/paulrberg/create-eth-app/tar.gz/develop"),
+    got.stream("https://codeload.github.com/TomAFrench/create-eth-app/tar.gz/develop"),
     tar.extract({ cwd: root, strip: 3 }, [`create-eth-app-develop/templates/${name}`]),
-  );
-}
-
-export async function downloadAndExtractDefaultTemplate(root: string): Promise<void> {
-  return await promisePipe(
-    got.stream("https://codeload.github.com/paulrberg/cea-template/tar.gz/develop"),
-    tar.extract({ cwd: root, strip: 1 }),
   );
 }
 
 export function hasTemplate(name: string): Promise<boolean> {
   return isUrlOk(
-    `https://api.github.com/repos/paulrberg/create-eth-app/contents/templates/${encodeURIComponent(name)}/package.json`,
+    `https://api.github.com/repos/TomAFrench/create-eth-app/contents/templates/${encodeURIComponent(name)}/package.json`,
   );
 }
 

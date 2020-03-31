@@ -1,16 +1,15 @@
 {
-  "name": "create-eth-app",
-  "description": "Create Ethereum-powered React apps with one command",
+  "name": "create-ocean-app",
+  "description": "Create Ocean-powered React apps with one command",
   "version": "1.1.0",
   "author": {
-    "name": "Paul Razvan Berg",
-    "url": "https://paulrberg.com"
+    "name": "Tom French"
   },
   "bin": {
-    "create-eth-app": "./dist/index.js"
+    "create-ocean-app": "./dist/index.js"
   },
   "bugs": {
-    "url": "https://github.com/paulrberg/create-eth-app/issues"
+    "url": "https://github.com/TomAFrench/create-eth-app/issues"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.4",
@@ -47,9 +46,10 @@
   "files": [
     "/dist"
   ],
-  "homepage": "https://github.com/paulrberg/create-eth-app",
+  "homepage": "https://github.com/TomAFrench/create-eth-app",
   "keywords": [
     "ethereum",
+    "ocean",
     "react",
     "workspaces",
     "yarn"
@@ -58,7 +58,7 @@
   "main": "./dist/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/paulrberg/create-eth-app"
+    "url": "https://github.com/TomAFrench/create-eth-app"
   },
   "scripts": {
     "build": "ncc build ./src/index.ts --out dist/",
