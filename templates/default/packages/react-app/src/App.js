@@ -18,13 +18,6 @@ import { OCEAN_SETUP_OPTIONS } from './config'
 import oceanLogoLight from './assets/oceanLogoLight.svg'
 import oceanLogoDark from './assets/oceanLogoDark.svg'
 
-let web3
-
-if (window.web3) {
-  web3 = new Web3(window.web3.currentProvider)
-  window.ethereum.enable()
-}
-
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: 'relative',
@@ -66,6 +59,10 @@ const App = (props) => {
 
   useEffect(()=> {
     async function getOcean (){
+      
+      const web3 = new Web3(window.web3.currentProvider)
+      await window.ethereum.enable()
+
       const ocean = await new Ocean.getInstance({
         web3Provider: web3,
         ...OCEAN_SETUP_OPTIONS,
@@ -91,7 +88,6 @@ const App = (props) => {
             <Grid item >
               <Toolbar>
                 <img src={oceanLogoDark} className={classes.appBarLogo} alt="ocean-logo" />
-                {!web3 && <p>No Web3 Browser!</p>}
               </Toolbar>
             </Grid>
             <Grid item >
