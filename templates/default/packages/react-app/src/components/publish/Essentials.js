@@ -235,6 +235,8 @@ const FileInput = ({files, setFiles}) => {
               </Button>
             )
         })}
+      </Grid>
+      <Grid item>
         { open === "url" ?
           <ItemForm
             placeholder={"testplaceholder"}
@@ -248,16 +250,21 @@ const FileInput = ({files, setFiles}) => {
           :
           null
         }
-      {files.length > 0 && 
-        files.map((item, index) => (
-          <Item
+      </Grid>
+      {files.length > 0 && (
+        <Grid item>
+          <Typography variant="h6" gutterBottom>
+            Files to be published
+          </Typography>
+          {files.map((item, index) => 
+            <Item
               key={index}
               item={item}
               removeFile={() => removeFile(index)}
-          />
-        )
+            />
+            )}
+        </Grid>
       )}
-      </Grid>
     </Grid>
   )
 }
