@@ -30,6 +30,8 @@ import Publish from './components/publish'
 
 import consumeAsset from './utils/consume'
 
+import { OCEAN_SETUP_OPTIONS } from './config'
+
 let web3
 
 if (window.web3) {
@@ -82,17 +84,7 @@ const App = (props) => {
     async function getOcean (){
       const ocean = await new Ocean.getInstance({
         web3Provider: web3,
-        nodeUri: 'https://nile.dev-ocean.com',
-        aquariusUri: 'https://aquarius.marketplace.dev-ocean.com',
-        brizoUri: 'https://brizo.marketplace.dev-ocean.com',
-        brizoAddress: '0x4aaab179035dc57b35e2ce066919048686f82972',
-        secretStoreUri: 'https://secret-store.nile.dev-ocean.com',
-        // local Spree connection
-        // nodeUri: 'http://localhost:8545',
-        // aquariusUri: 'http://aquarius:5000',
-        // brizoUri: 'http://localhost:8030',
-        // brizoAddress: '0x00bd138abd70e2f00903268f3db08f2d25677c9e',
-        // secretStoreUri: 'http://localhost:12001',
+        ...OCEAN_SETUP_OPTIONS,
         verbose: true
       })
       setOcean(ocean)
