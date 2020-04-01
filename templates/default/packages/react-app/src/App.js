@@ -48,8 +48,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   button: {
-    marginTop: theme.spacing(2),
-    marginLeft: theme.spacing(1),
+    background: "linear-gradient(to bottom right, rgb(123, 17, 115) 0%, rgb(246, 56, 138) 100%)"
   },
   address: {
     marginRight: theme.spacing(2),
@@ -110,7 +109,7 @@ const App = (props) => {
                     </Typography>
                   )
                 }
-                <Button color="secondary" variant="contained" onClick={() => setPublish(!publish)}>
+                <Button color="secondary" variant="contained" className={classes.button} onClick={() => setPublish(!publish)}>
                   { publish ? "Search Data" : "Publish Data" }
                 </Button>
               </Toolbar>
