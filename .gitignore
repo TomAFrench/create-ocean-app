@@ -5,7 +5,6 @@ node_modules/
 
 # files
 .DS_Store
-.env*
 .pnp*
 npm-debug.log*
 tsconfig.tsbuildinfo
