@@ -3,41 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
-const categoryList = [
-  "Image Recognition",
-  "Dataset Of Datasets",
-  "Language",
-  "Performing Arts",
-  "Visual Arts & Design",
-  "Philosophy",
-  "History",
-  "Theology",
-  "Anthropology & Archeology",
-  "Sociology",
-  "Psychology",
-  "Politics",
-  "Interdisciplinary",
-  "Economics & Finance",
-  "Demography",
-  "Biology",
-  "Chemistry",
-  "Physics & Energy",
-  "Earth & Climate",
-  "Space & Astronomy",
-  "Mathematics",
-  "Computer Technology",
-  "Engineering",
-  "Agriculture & Bio Engineering",
-  "Transportation",
-  "Urban Planning",
-  "Health & Medicine",
-  "Business & Management",
-  "Sports & Recreation",
-  "Communication & Journalism",
-  "Deep Learning",
-  "Law",
-  "Other"
-]
+import {categories as categoryList} from '../../constants'
 
 export default function Information( { description, setDescription, categories, setCategories, creationDate, setCreationDate }) {
   return (
