@@ -94,7 +94,7 @@ const ItemForm = ({addFile}) => {
           />
       </Grid>
       <Grid item xs={4}>
-          <Button onClick={(e: Event) => handleSubmit(e)}>
+          <Button color="primary" variant="contained" onClick={e => handleSubmit(e)}>
               Add File
           </Button>
 
