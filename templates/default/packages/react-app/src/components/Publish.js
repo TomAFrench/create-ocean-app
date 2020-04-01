@@ -105,7 +105,7 @@ export default function Publish({ocean}) {
     throw new Error('Unknown step');
   }
 
-  console.log(title)
+  console.log({ title, files, description, categories, creationDate, author, copyrightHolder, license })
   return (
     <Grid item>
       <Paper className={classes.paper}>

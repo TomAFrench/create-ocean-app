@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-import Publish from './components/publish'
+import Publish from './components/Publish'
 import Search from './components/Search'
 
 import { OCEAN_SETUP_OPTIONS } from './config'
