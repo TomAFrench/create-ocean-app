@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -106,49 +107,51 @@ export default function Publish({ocean}) {
 
   console.log(title)
   return (
-    <Paper className={classes.paper}>
-      <Typography component="h1" variant="h4" align="center">
-        Publish
-      </Typography>
-      <Stepper activeStep={activeStep} className={classes.stepper}>
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-      {activeStep === steps.length ? (
-        <>
-          <Typography variant="h5" gutterBottom>
-            Thank you for publishing.
-          </Typography>
-          <Typography variant="subtitle1">
-            We're now uploading
-          </Typography>
-        </>
-      ) : (
-        <>
-          {activeStepComponent}
-          <div className={classes.buttons}>
-            {activeStep !== 0 && (
-              <Button onClick={handleBack} className={classes.button}>
-                Back
-              </Button>
-            )}
-            {activeStep !== steps.length - 1 && (
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                className={classes.button}
-              >
-                Next
-              </Button>
-            )}
+    <Grid item>
+      <Paper className={classes.paper}>
+        <Typography component="h1" variant="h4" align="center">
+          Publish
+        </Typography>
+        <Stepper activeStep={activeStep} className={classes.stepper}>
+          {steps.map((label) => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+        {activeStep === steps.length ? (
+          <>
+            <Typography variant="h5" gutterBottom>
+              Thank you for publishing.
+            </Typography>
+            <Typography variant="subtitle1">
+              We're now uploading
+            </Typography>
+          </>
+        ) : (
+          <>
+            {activeStepComponent}
+            <div className={classes.buttons}>
+              {activeStep !== 0 && (
+                <Button onClick={handleBack} className={classes.button}>
+                  Back
+                </Button>
+              )}
+              {activeStep !== steps.length - 1 && (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleNext}
+                  className={classes.button}
+                >
+                  Next
+                </Button>
+              )}
 
-          </div>
-        </>
-      )}
-    </Paper>
+            </div>
+          </>
+        )}
+      </Paper>
+    </Grid>
   );
 }

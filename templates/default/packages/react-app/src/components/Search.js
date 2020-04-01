@@ -15,14 +15,9 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
-import oceanLogoLight from '../assets/oceanLogoLight.svg'
-
 import consumeAsset from '../utils/consume'
 
 const useStyles = makeStyles((theme) => ({
-  mainLogo: {
-    height: 150,
-  },
   button: {
     marginTop: theme.spacing(2),
     marginLeft: theme.spacing(1),
@@ -48,26 +43,7 @@ const Search = ({ocean}) => {
   const clearSearch = () => setResults({})
 
   return (
-    <Grid 
-        container 
-        direction="column"
-        justify="space-around"
-        alignItems="center"
-        alignContent="center"
-        spacing={3}
-        className={classes.layout}
-        >
-
-        <Grid item>
-          <Typography variant="h6" color="inherit" noWrap>
-            Welcome to the Ocean Protocol Quick Start App
-          </Typography>
-        </Grid>
-        
-        <Grid item>
-          <img src={oceanLogoLight} className={classes.mainLogo} alt="ocean-logo" />
-        </Grid>
-
+      <>
         <Grid item container justify="center">
           <Grid item>
             <TextField
@@ -90,8 +66,8 @@ const Search = ({ocean}) => {
             search={results}
             query={searchText}
           />
-          </Grid>
-      </Grid>
+        </Grid>
+      </>
   )
 }
 

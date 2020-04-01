@@ -15,6 +15,7 @@ import Search from './components/Search'
 
 import { OCEAN_SETUP_OPTIONS } from './config'
 
+import oceanLogoLight from './assets/oceanLogoLight.svg'
 import oceanLogoDark from './assets/oceanLogoDark.svg'
 
 let web3
@@ -31,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
   appBarLogo: {
     height: 75,
     padding: theme.spacing(2),
+  },
+  mainLogo: {
+    height: 150,
   },
   layout: {
     width: 'auto',
@@ -59,6 +63,7 @@ const App = (props) => {
   const classes = useStyles();
   const [userAddress, setUserAddress] = useState("")
   const [ocean, setOcean] = useState()
+  const [publish, setPublish ] = useState(false)
 
   useEffect(()=> {
     async function getOcean (){
@@ -105,8 +110,8 @@ const App = (props) => {
                     </Typography>
                   )
                 }
-                <Button color="secondary" variant="contained" >
-                  Publish Data
+                <Button color="secondary" variant="contained" onClick={() => setPublish(!publish)}>
+                  { publish ? "Search Data" : "Publish Data" }
                 </Button>
               </Toolbar>
             </Grid>
@@ -114,8 +119,30 @@ const App = (props) => {
       
     </AppBar>
     <main className={classes.layout}>
-      <Search ocean={ocean}/>
-      <Publish ocean={ocean}/>
+      <Grid 
+        container 
+        direction="column"
+        justify="space-around"
+        alignItems="center"
+        alignContent="center"
+        spacing={3}
+        className={classes.layout}
+        >
+        <Grid item>
+          <Typography variant="h6" color="inherit" noWrap>
+            Welcome to the Ocean Protocol Quick Start App
+          </Typography>
+        </Grid>
+        
+        <Grid item>
+          <img src={oceanLogoLight} className={classes.mainLogo} alt="ocean-logo" />
+        </Grid>
+      {publish ? 
+        <Publish ocean={ocean}/>
+        :
+        <Search ocean={ocean}/>
+      }
+      </Grid>
     </main>
     </>
   )
