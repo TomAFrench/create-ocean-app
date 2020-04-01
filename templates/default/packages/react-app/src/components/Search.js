@@ -55,9 +55,9 @@ const Search = ({ocean}) => {
               />
           </Grid>
           <Grid item className={classes.button}>
-              <Button color="primary" variant="contained" onClick={() => searchAssets(searchText)}>
-                Search
-              </Button>
+            <Button color="primary" variant="contained" onClick={() => searchAssets(searchText)}>
+              Search
+            </Button>
           </Grid>
         </Grid>
         <Grid item>
