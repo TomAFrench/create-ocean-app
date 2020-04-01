@@ -30,9 +30,6 @@ function streamFiles(ipfs, files) {
 function Form({ children, ipfsMessage, ipfsError, isIpfsReady, error }) {
   return (
       <div>
-          {/* <Label htmlFor="fileUpload" required> */}
-              Add File To IPFS
-          {/* </Label> */}
           {children}
           {/* <Status */}
               {/* message={ipfsMessage} */}

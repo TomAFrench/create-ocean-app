@@ -1,4 +1,4 @@
-import React, {lazy, Suspense, PureComponent, useState} from 'react';
+import React, {lazy, Suspense, useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -6,114 +6,111 @@ import Button from '@material-ui/core/Button';
 import filesize from 'filesize'
 import Dotdotdot from 'react-dotdotdot'
 import axios from 'axios'
+import isUrl from 'is-url-superb'
 import cleanupContentType from '../../utils/cleanupContentType'
 
 const Ipfs = lazy(() => import('../IpfsDropzone'))
 
 const Item = ({ item, removeFile }) => (
-    <li>
+    <Grid container direction="column" spacing={3} alignContent="flex-start">
+      <Grid item>
         <a href={item.url} title={item.url}>
             <Dotdotdot clamp={2}>{item.url}</Dotdotdot>
         </a>
-        <div >
-            <span>URL {item.found ? 'confirmed' : ' not confirmed'}</span>
-            <span>
-                {item.found && item.contentLength
-                    ? filesize(item.contentLength)
-                    : 'unknown size'}
-            </span>
-            <span>
-                {item.found && item.contentType
-                    ? item.contentType.split('/')[1]
-                    : 'unknown type'}
-            </span>
-        </div>
-        <button
-            type="button"
-            title="Remove item"
-            onClick={removeFile}
-        >
-            &times;
-        </button>
-    </li>
+        </Grid>
+        <Grid item container spacing={3} alignItems="center">
+          <Grid item>
+            URL {item.found ? 'confirmed' : ' not confirmed'}
+          </Grid>
+          <Grid item>
+            {
+            item.found && item.contentLength
+              ? filesize(item.contentLength)
+              : 'unknown size'
+            }
+          </Grid>
+          <Grid item>
+            {
+            item.found && item.contentType
+              ? item.contentType.split('/')[1]
+              : 'unknown type'
+            }
+          </Grid>
+          <Grid item>
+            <Button color="primary" variant="contained" title="Remove item" onClick={removeFile}>
+              &times;
+            </Button>
+          </Grid>
+
+    </Grid>
+  </Grid>
 )
 
-class ItemForm extends PureComponent{
-    state = {
-        url: '',
-        hasError: false,
-        noUrl: false
+const ItemForm = ({addFile}) => {
+  const [url, setUrl] = useState('')
+  const [hasError, setHasError] = useState(false)
+  const [noUrl, setNoUrl] = useState(false)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    // return when required fields are empty, and url value is no url
+    // Can't use browser validation cause we are in a form within a form
+    if (!url) {
+      setHasError(true)
+      return
     }
 
-    handleSubmit = (e) => {
-        e.preventDefault()
-
-        const { url } = this.state
-
-        // return when required fields are empty, and url value is no url
-        // Can't use browser validation cause we are in a form within a form
-        if (!url) {
-            this.setState({ hasError: true })
-            return
-        }
-
-        if (url && !url.includes('ipfs://') /*&& !isUrl(url)*/) {
-            this.setState({ noUrl: true })
-            return
-        }
-
-        this.props.addFile(url)
+    if (!url.includes('ipfs://') && !isUrl(url)) {
+      setNoUrl(true)
+      return
     }
 
-    handleChangeUrl = (e) => {
-        this.setState({ url: e.currentTarget.value })
-        this.clearErrors()
-    }
+    addFile(url)
+  }
 
-    clearErrors() {
-        if (this.state.hasError) this.setState({ hasError: false })
-        if (this.state.noUrl) this.setState({ noUrl: false })
-    }
+  const handleChangeUrl = (e) => {
+    setUrl(e.currentTarget.value)
+    clearErrors()
+  }
 
-    render() {
-      const { url, hasError, noUrl } = this.state
+  const clearErrors = () => {
+      if (hasError) setHasError(false)
+      if (noUrl) setNoUrl(false)
+  }
 
-      return (
-        <Grid item container spacing={3}>
-          <Grid item xs={8}>
-            Enter URL
-          </Grid>
-          <Grid item xs={8}>
-              <TextField
-                required
-                id="url"
-                name="url"
-                label="URL"
-                value={url}
-                onChange={this.handleChangeUrl}
-                placeholder="e.g. https://file.com/file.json"
-                fullWidth
-              />
-          </Grid>
-          <Grid item xs={4}>
-              <Button onClick={(e: Event) => this.handleSubmit(e)}>
-                  Add File
-              </Button>
+  return (
+    <Grid item container spacing={3} >
+      <Grid item xs={8}>
+          <TextField
+            required
+            id="url"
+            name="url"
+            label="URL"
+            value={url}
+            onChange={handleChangeUrl}
+            placeholder="e.g. https://file.com/file.json"
+            fullWidth
+          />
+      </Grid>
+      <Grid item xs={4}>
+          <Button onClick={(e: Event) => handleSubmit(e)}>
+              Add File
+          </Button>
 
-              {hasError && (
-                  <span >
-                      Please fill in all required fields.
-                  </span>
-              )}
-              {noUrl && (
-                  <span >
-                      Please enter a valid URL.
-                  </span>
-              )}
-          </Grid>
-        </Grid>
-      )
-    }
+          {hasError && (
+              <span >
+                  Please fill in all required fields.
+              </span>
+          )}
+          {noUrl && (
+              <span >
+                  Please enter a valid URL.
+              </span>
+          )}
+      </Grid>
+    </Grid>
+  )
 }
 
 const FileInput = ({files, setFiles}) => {
@@ -164,44 +161,45 @@ const FileInput = ({files, setFiles}) => {
     }
 
     try {
-        const { headers, status } = await axios({
-          method: 'GET',
-          url: url,
-          cancelToken: signal.token
-        })
+      const { headers, status } = await axios({
+        method: 'GET',
+        url: url,
+        cancelToken: signal.token
+      })
 
-        let contentLength
-        let contentType
-        let found = status.toString().startsWith('2') || status.toString().startsWith('416')
-        if ( headers['content-range'] && !headers['content-length'] ) {
-            const size = headers['content-range'].split('/')[1]
-            contentLength = parseInt(size) // convert to number
-        }
-        if (headers['content-type']) {
-          contentType = headers['content-type'].split(';')[0]
-        }
+      let contentLength
+      let contentType
+      let found = status.toString().startsWith('2') || status.toString().startsWith('416')
+      console.log(headers)
+      if ( headers['content-length'] ) {
+        contentLength = parseInt(headers['content-length']) // convert to number
+      }
+      // if ( headers['content-range'] && !headers['content-length'] ) {
+      //     const size = headers['content-range'].split('/')[1]
+      //     contentLength = parseInt(size) // convert to number
+      // }
+      if (headers['content-type']) {
+        contentType = headers['content-type'].split(';')[0]
+      }
 
-        
-        if (contentLength) file.contentLength = contentLength
-        if (contentType) {
-            file.contentType = contentType
-            file.compression = cleanupContentType(contentType)
-        }
+      
+      if (contentLength) file.contentLength = contentLength
+      if (contentType) {
+          file.contentType = contentType
+          file.compression = cleanupContentType(contentType)
+      }
 
-        // file.found = found
+      file.found = found
 
-        return file
+      return file
     } catch (error) {
-        !axios.isCancel(error) && console.error(error.message)
+      !axios.isCancel(error) && console.error(error.message)
     }
   }
 
   function removeFile(index) {
-    console.log(files, index)
-    const fileCopy = files
-    const deleted = fileCopy.splice(index, 1)
-    console.log(fileCopy)
-    setFiles(fileCopy)
+    files.splice(index, 1)
+    setFiles(files)
   }
 
   const toggleForm = (form) => {
@@ -211,7 +209,7 @@ const FileInput = ({files, setFiles}) => {
   }
 
   return (
-    <Grid container direction="column">
+    <Grid container direction="column" spacing={3}>
       <Grid item >
         <Typography variant="h6" gutterBottom>
           Add File
@@ -238,27 +236,26 @@ const FileInput = ({files, setFiles}) => {
             )
         })}
         { open === "url" ?
-            <ItemForm
-              placeholder={"testplaceholder"}
-              addFile={addFile}
-            /> 
-            : open === "ipfs" ?
-              <Suspense fallback={<p>Loading...</p>}>
-                <Ipfs addFile={addFile} />
-              </Suspense>
-              :
-              null
-          }
-      {files.length > 0 && (
-        <ul >
-            {files.map((item, index) => (
-                <Item
-                    key={index}
-                    item={item}
-                    removeFile={() => removeFile(index)}
-                />
-            ))}
-        </ul>
+          <ItemForm
+            placeholder={"testplaceholder"}
+            addFile={addFile}
+          /> 
+          : 
+          open === "ipfs" ?
+            <Suspense fallback={<p>Loading...</p>}>
+              <Ipfs addFile={addFile} />
+            </Suspense>
+          :
+          null
+        }
+      {files.length > 0 && 
+        files.map((item, index) => (
+          <Item
+              key={index}
+              item={item}
+              removeFile={() => removeFile(index)}
+          />
+        )
       )}
       </Grid>
     </Grid>
