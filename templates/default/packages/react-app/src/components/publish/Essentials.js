@@ -9,19 +9,6 @@ import axios from 'axios'
 
 const Ipfs = lazy(() => import('../IpfsDropzone'))
 
-const buttons = [
-  {
-      id: 'url',
-      title: '+ From URL',
-      titleActive: '- Cancel'
-  },
-  {
-      id: 'ipfs',
-      title: '+ Add to IPFS',
-      titleActive: '- Cancel'
-  }
-]
-
 const cleanupContentType = (contentType: string) => {
   // strip away the 'application/' part
   const contentTypeSplit = contentType.split('/')[1]
@@ -137,6 +124,9 @@ class ItemForm extends PureComponent{
       return (
         <Grid item container spacing={3}>
           <Grid item xs={8}>
+            Enter URL
+          </Grid>
+          <Grid item xs={8}>
               <TextField
                 required
                 id="url"
@@ -169,9 +159,21 @@ class ItemForm extends PureComponent{
     }
 }
 
-export default function Essentials({title, setTitle, files, setFiles}) {
+const FileInput = ({files, setFiles}) => {
   const [open, setOpen] = useState(false)
-  console.log({title, setTitle, files, setFiles})
+
+  const buttons = [
+    {
+      id: 'url',
+      title: '+ From URL',
+      titleActive: '- Cancel'
+    },
+    {
+      id: 'ipfs',
+      title: '+ Add to IPFS',
+      titleActive: '- Cancel'
+    }
+  ]
 
   // for canceling axios requests
   const signal = axios.CancelToken.source()
@@ -229,7 +231,7 @@ export default function Essentials({title, setTitle, files, setFiles}) {
             file.compression = cleanupContentType(contentType)
         }
 
-        file.found = found
+        // file.found = found
 
         return file
     } catch (error) {
@@ -252,6 +254,64 @@ export default function Essentials({title, setTitle, files, setFiles}) {
   }
 
   return (
+    <Grid container direction="column">
+      <Grid item >
+        <Typography variant="h6" gutterBottom>
+          Add File
+        </Typography>
+      </Grid>
+      <input
+        type="hidden"
+        // name={name}
+        value={JSON.stringify(files)}
+        // onChange={onChange}
+        data-testid="files"
+      />
+      <Grid item >
+        {buttons.map(button => {
+            const isActive = button.id === open
+            return (
+              <Button
+                key={button.id}
+                link
+                onClick={() => toggleForm(button.id)}
+              >
+                {isActive ? button.titleActive : button.title}
+              </Button>
+            )
+        })}
+        { open === "url" ?
+            <ItemForm
+              placeholder={"testplaceholder"}
+              addFile={addFile}
+            /> 
+            : open === "ipfs" ?
+              <Suspense fallback={<p>Loading...</p>}>
+                <Ipfs addFile={addFile} />
+              </Suspense>
+              :
+              null
+          }
+      {files.length > 0 && (
+        <ul >
+            {files.map((item, index) => (
+                <Item
+                    key={index}
+                    item={item}
+                    removeFile={() => removeFile(index)}
+                />
+            ))}
+        </ul>
+      )}
+      </Grid>
+    </Grid>
+  )
+}
+
+export default function Essentials({title, setTitle, files, setFiles}) {
+  console.log({title, setTitle, files, setFiles})
+
+  return (
     <>
       <Typography variant="h6" gutterBottom>
         Essentials
@@ -270,50 +330,7 @@ export default function Essentials({title, setTitle, files, setFiles}) {
           />
         </Grid>
         <Grid item xs={12}>
-          <input
-          type="hidden"
-          // name={name}
-          value={JSON.stringify(files)}
-          // onChange={onChange}
-          data-testid="files"
-        />
-          <div >
-            {buttons.map(button => {
-                const isActive = button.id === open
-                return (
-                    <Button
-                        key={button.id}
-                        link
-                        onClick={() => toggleForm(button.id)}
-                    >
-                        {isActive ? button.titleActive : button.title}
-                    </Button>
-                )
-            })}
-            { open === "url" ?
-                <ItemForm
-                  placeholder={"testplaceholder"}
-                  addFile={addFile}
-                /> 
-                : open === "ipfs" ?
-                  <Suspense fallback={<p>Loading...</p>}>
-                    <Ipfs addFile={addFile} />
-                  </Suspense>
-                  :
-                  null
-              }
-          {files.length > 0 && (
-            <ul >
-                {files.map((item, index) => (
-                    <Item
-                        key={index}
-                        item={item}
-                        removeFile={() => removeFile(index)}
-                    />
-                ))}
-            </ul>
-          )}
-          </div>
+          <FileInput files={files} setFiles={setFiles}/>
         </Grid>
       </Grid>
     </>
