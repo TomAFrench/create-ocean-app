@@ -198,8 +198,9 @@ const FileInput = ({files, setFiles}) => {
   }
 
   function removeFile(index) {
-    files.splice(index, 1)
-    setFiles(files)
+    const filesCopy = files.slice()
+    filesCopy.splice(index, 1)
+    setFiles(filesCopy)
   }
 
   const toggleForm = (form) => {
