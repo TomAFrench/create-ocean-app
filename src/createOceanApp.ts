@@ -33,6 +33,7 @@ export async function createOceanApp({ appPath, template }: { appPath: string; t
   const isOnline = await getOnline();
   const originalDirectory = process.cwd();
 
+  console.log();
   console.log(`Creating a new Ocean-powered React app in ${chalk.green(root)}.`);
   console.log();
 
