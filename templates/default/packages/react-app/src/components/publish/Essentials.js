@@ -172,7 +172,7 @@ const FileInput = ({files, setFiles}) => {
       let found = status.toString().startsWith('2') || status.toString().startsWith('416')
       console.log(headers)
       if ( headers['content-length'] ) {
-        contentLength = parseInt(headers['content-length']) // convert to number
+        contentLength = headers['content-length'] // convert to number
       }
       // if ( headers['content-range'] && !headers['content-length'] ) {
       //     const size = headers['content-range'].split('/')[1]
