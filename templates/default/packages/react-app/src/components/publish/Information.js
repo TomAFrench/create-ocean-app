@@ -33,9 +33,9 @@ export default function Information( { description, setDescription, categories, 
             }}
             value={categories}
             onChange={(event) => setCategories([event.target.value])}
-            variant="filled"
             fullWidth
           >
+            <option value=""/>
             {categoryList.map(category => (
                 <option key={category} value={category}>
                   {category}
