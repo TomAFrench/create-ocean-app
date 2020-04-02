@@ -61,49 +61,52 @@ export default function Publish({ocean}) {
     setActiveStep(activeStep - 1);
   };
 
-  let activeStepComponent
-  if (activeStep === 0){
-    activeStepComponent = (
-      <Essentials
-        title={title}
-        setTitle={setTitle}
-        files={files}
-        setFiles={setFiles}
-        />
-    )
-  } else if (activeStep === 1){
-    activeStepComponent = (
-      <Information
-        description={description}
-        setDescription={setDescription}
-        categories={category}
-        setCategories={setCategory}
-        creationDate={creationDate}
-        setCreationDate={setCreationDate}
-        />
-    )
-  } else if (activeStep === 2){
-    activeStepComponent = (
-      <Authorship
-        author={author}
-        setAuthor={setAuthor}
-        copyrightHolder={copyrightHolder}
-        setCopyrightHolder={setCopyrightHolder}
-        license={license}
-        setLicense={setLicense}
-        />
-      )
-  } else if (activeStep === 3){
-    const assetInfo = { title, files, description, category, creationDate, author, copyrightHolder, license }
-    activeStepComponent = (
-      <Register
-        ocean={ocean}
-        assetInfo={assetInfo}
-      />
-    )
-  } else {
-    throw new Error('Unknown step');
+  const renderActiveStep = (step) => {
+    switch(step) {
+      case 0:
+        return (
+          <Essentials
+            title={title}
+            setTitle={setTitle}
+            files={files}
+            setFiles={setFiles}
+          />
+        )
+      case 1:
+        return (
+          <Information
+            description={description}
+            setDescription={setDescription}
+            categories={category}
+            setCategories={setCategory}
+            creationDate={creationDate}
+            setCreationDate={setCreationDate}
+          />
+        )
+      case 2:
+        return (
+          <Authorship
+            author={author}
+            setAuthor={setAuthor}
+            copyrightHolder={copyrightHolder}
+            setCopyrightHolder={setCopyrightHolder}
+            license={license}
+            setLicense={setLicense}
+          />
+        )
+      case 3:
+        const assetInfo = { title, files, description, category, creationDate, author, copyrightHolder, license }
+        return (
+          <Register
+            ocean={ocean}
+            assetInfo={assetInfo}
+          />
+        )
+      default:
+        throw new Error('Unknown step');
+    }
   }
+  
   return (
     <Grid item>
       <Paper className={classes.paper}>
@@ -128,7 +131,7 @@ export default function Publish({ocean}) {
           </>
         ) : (
           <>
-            {activeStepComponent}
+            {renderActiveStep(activeStep)}
             <div className={classes.buttons}>
               {activeStep !== 0 && (
                 <Button onClick={handleBack} className={classes.button}>
