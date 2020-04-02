@@ -30,7 +30,7 @@ function getOceanSetupOptions(network) {
         secretStoreUri: 'http://localhost:12001',
       }
     default: 
-        throw new Error(`Network "${network} not recognised"`)
+      throw new Error(`Network "${network} not recognised"`)
   }
 }
 
