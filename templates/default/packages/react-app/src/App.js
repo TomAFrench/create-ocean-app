@@ -51,6 +51,26 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const AddressDisplay = ({ userAddress }) => {
+  const classes = useStyles();
+  if (!userAddress) {
+    return (
+      <Typography color="inherit" className={classes.address}>
+        No account found!
+      </Typography>
+    )
+  }
+
+  return (
+    <>
+      <AccountCircleIcon className={classes.accountIcon}/>
+      <Typography color="inherit" className={classes.address}>
+        {`${userAddress.slice(0,6)}...${userAddress.slice(-5,-1)}`}
+      </Typography>
+    </>
+  )
+}
+
 const App = (props) => {
   const classes = useStyles();
   const [userAddress, setUserAddress] = useState("")
@@ -92,26 +112,13 @@ const App = (props) => {
             </Grid>
             <Grid item >
               <Toolbar>
-                { userAddress ? (
-                    <>
-                      <AccountCircleIcon className={classes.accountIcon}/>
-                      <Typography color="inherit" className={classes.address}>
-                        {`${userAddress.slice(0,6)}...${userAddress.slice(-5,-1)}`}
-                      </Typography>
-                    </>
-                  ):(
-                    <Typography color="inherit" className={classes.address}>
-                      No account found!
-                    </Typography>
-                  )
-                }
+                <AddressDisplay userAddress={userAddress} />
                 <Button color="secondary" variant="contained" className={classes.button} onClick={() => setPublish(!publish)}>
                   { publish ? "Search Data" : "Publish Data" }
                 </Button>
               </Toolbar>
             </Grid>
         </Grid>
-      
     </AppBar>
     <main className={classes.layout}>
       <Grid 
