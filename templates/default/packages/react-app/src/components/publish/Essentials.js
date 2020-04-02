@@ -267,30 +267,28 @@ const FileInput = ({files, setFiles}) => {
 }
 
 export default function Essentials({title, setTitle, files, setFiles}) {
-  console.log({title, setTitle, files, setFiles})
-
   return (
-    <>
-      <Typography variant="h6" gutterBottom>
-        Essentials
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="title"
-            name="title"
-            label="Title"
-            value={title}
-            onChange={event => setTitle(event.target.value)}
-            placeholder="e.g. Shapes of Desert Plants"
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FileInput files={files} setFiles={setFiles}/>
-        </Grid>
+    <Grid container spacing={3} direction="column">
+      <Grid item xs={12}>
+        <Typography variant="h6" gutterBottom>
+          Essentials
+        </Typography>
       </Grid>
-    </>
+      <Grid item xs={12}>
+        <TextField
+          required
+          id="title"
+          name="title"
+          label="Title"
+          value={title}
+          onChange={event => setTitle(event.target.value)}
+          placeholder="e.g. Shapes of Desert Plants"
+          fullWidth
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <FileInput files={files} setFiles={setFiles}/>
+      </Grid>
+    </Grid>
   );
 }
