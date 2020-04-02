@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import { Grid } from '@material-ui/core';
 
 const createNewAsset = (assetInfo) => {
+  assetInfo.files = assetInfo.files.map(({ found, ...keepAttrs }) => keepAttrs)
   return {
     main: {
       type: 'dataset',
