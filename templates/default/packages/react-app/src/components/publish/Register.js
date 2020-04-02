@@ -2,6 +2,7 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Grid } from '@material-ui/core';
+import registerAsset from '../../utils/register'
 
 const createNewAsset = (assetInfo) => {
   assetInfo.files = assetInfo.files.map(({ found, ...keepAttrs }) => keepAttrs)
@@ -26,23 +27,12 @@ const createNewAsset = (assetInfo) => {
   }
 }
 
-const registerAsset = async (ocean, asset) => {
-  try {
-    const accounts = await ocean.accounts.list()
-    const ddo = await ocean.assets.create(asset, accounts[0])
-    console.log('Asset successfully submitted.')
-    console.log(ddo)
-    // keep track of this registered asset for consumption later on
-    alert(
-      'Asset successfully submitted. Look into your console to see the response DDO object.'
-    )
-  } catch (error) {
-    console.error(error.message)
-  }
-}
-
 export default function Register({ ocean, assetInfo }) {
-  console.log(assetInfo)
+  const register = () => {
+    const asset = createNewAsset(assetInfo)
+    registerAsset(ocean, asset)
+  }
+  
   return (
     <Grid item container spacing={3} direction="column">
       <Grid item>
@@ -61,11 +51,7 @@ export default function Register({ ocean, assetInfo }) {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => {
-            const asset = createNewAsset(assetInfo)
-            registerAsset(ocean, asset)
-          }}
-          // className={classes.button}
+          onClick={register}
           >
           Register Asset
         </Button>
