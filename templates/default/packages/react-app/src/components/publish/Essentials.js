@@ -216,13 +216,6 @@ const FileInput = ({files, setFiles}) => {
           Add File
         </Typography>
       </Grid>
-      <input
-        type="hidden"
-        // name={name}
-        value={JSON.stringify(files)}
-        // onChange={onChange}
-        data-testid="files"
-      />
       <Grid item >
         {buttons.map(button => {
             const isActive = button.id === open
