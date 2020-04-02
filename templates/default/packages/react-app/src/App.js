@@ -71,6 +71,34 @@ const AddressDisplay = ({ userAddress }) => {
   )
 }
 
+const TopBar = ({userAddress, publish, setPublish}) => {
+  const classes = useStyles();
+  const togglePublish = () => setPublish(!publish)
+  return (
+    <AppBar position="absolute" className={classes.appBar}>
+      <Grid 
+        container 
+        justify="space-between"
+        alignItems="center"
+      >
+        <Grid item >
+          <Toolbar>
+            <img src={oceanLogoDark} className={classes.appBarLogo} alt="ocean-logo" />
+          </Toolbar>
+        </Grid>
+        <Grid item >
+          <Toolbar>
+            <AddressDisplay userAddress={userAddress} />
+            <Button color="secondary" variant="contained" className={classes.button} onClick={togglePublish}>
+              { publish ? "Search Data" : "Publish Data" }
+            </Button>
+          </Toolbar>
+        </Grid>
+      </Grid>
+    </AppBar>
+  )
+}
+
 const App = (props) => {
   const classes = useStyles();
   const [userAddress, setUserAddress] = useState("")
@@ -99,53 +127,33 @@ const App = (props) => {
 
   return (
     <>
-    <AppBar position="absolute" className={classes.appBar}>
-      <Grid 
+      <TopBar userAddress={userAddress} publish={publish} setPublish={setPublish} />
+      <main className={classes.layout}>
+        <Grid 
           container 
-          justify="space-between"
+          direction="column"
+          justify="space-around"
           alignItems="center"
-          >
-            <Grid item >
-              <Toolbar>
-                <img src={oceanLogoDark} className={classes.appBarLogo} alt="ocean-logo" />
-              </Toolbar>
-            </Grid>
-            <Grid item >
-              <Toolbar>
-                <AddressDisplay userAddress={userAddress} />
-                <Button color="secondary" variant="contained" className={classes.button} onClick={() => setPublish(!publish)}>
-                  { publish ? "Search Data" : "Publish Data" }
-                </Button>
-              </Toolbar>
-            </Grid>
-        </Grid>
-    </AppBar>
-    <main className={classes.layout}>
-      <Grid 
-        container 
-        direction="column"
-        justify="space-around"
-        alignItems="center"
-        alignContent="center"
-        spacing={3}
-        className={classes.layout}
+          alignContent="center"
+          spacing={3}
+          className={classes.layout}
         >
-        <Grid item>
-          <Typography variant="h6" color="inherit" noWrap>
-            Welcome to the Ocean Protocol Quick Start App
-          </Typography>
+          <Grid item>
+            <Typography variant="h6" color="inherit" noWrap>
+              Welcome to the Ocean Protocol Quick Start App
+            </Typography>
+          </Grid>
+          
+          <Grid item>
+            <img src={oceanLogoLight} className={classes.mainLogo} alt="ocean-logo" />
+          </Grid>
+          {publish ? 
+            <Publish ocean={ocean}/>
+            :
+            <Search ocean={ocean}/>
+          }
         </Grid>
-        
-        <Grid item>
-          <img src={oceanLogoLight} className={classes.mainLogo} alt="ocean-logo" />
-        </Grid>
-      {publish ? 
-        <Publish ocean={ocean}/>
-        :
-        <Search ocean={ocean}/>
-      }
-      </Grid>
-    </main>
+      </main>
     </>
   )
 }
