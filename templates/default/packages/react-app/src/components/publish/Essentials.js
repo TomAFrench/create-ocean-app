@@ -216,17 +216,20 @@ const FileInput = ({files, setFiles}) => {
           Add File
         </Typography>
       </Grid>
-      <Grid item >
+      <Grid container item spacing={3} >
         {buttons.map(button => {
             const isActive = button.id === open
             return (
-              <Button
-                key={button.id}
-                link
-                onClick={() => toggleForm(button.id)}
-              >
-                {isActive ? button.titleActive : button.title}
-              </Button>
+              <Grid item>
+                <Button
+                  key={button.id}
+                  variant="contained"
+                  color="primary"
+                  onClick={() => toggleForm(button.id)}
+                >
+                  {isActive ? button.titleActive : button.title}
+                </Button>
+              </Grid>
             )
         })}
       </Grid>
