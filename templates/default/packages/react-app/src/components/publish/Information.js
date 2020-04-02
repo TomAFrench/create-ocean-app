@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 
 import {categories as categoryList} from '../../constants'
 
-export default function Information( { description, setDescription, categories, setCategories, creationDate, setCreationDate }) {
+export default function Information( { description, setDescription, category, setCategory, creationDate, setCreationDate }) {
   return (
     <>
       <Typography variant="h6" gutterBottom>
@@ -31,8 +31,8 @@ export default function Information( { description, setDescription, categories, 
             SelectProps={{
               native: true,
             }}
-            value={categories}
-            onChange={(event) => setCategories([event.target.value])}
+            value={category}
+            onChange={(event) => setCategory(event.target.value)}
             fullWidth
           >
             <option value=""/>

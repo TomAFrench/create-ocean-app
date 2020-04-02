@@ -22,7 +22,7 @@ const createNewAsset = (assetInfo) => {
     additionalInformation: {
       description: assetInfo.description,
       copyrightHolder: assetInfo.copyrightHolder,
-      categories: assetInfo.category
+      categories: [assetInfo.category]
     }
   }
 }

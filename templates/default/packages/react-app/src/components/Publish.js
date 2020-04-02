@@ -47,7 +47,7 @@ export default function Publish({ocean}) {
   const [title, setTitle] = useState("")
   const [files, setFiles] = useState([])
   const [description, setDescription] = useState("")
-  const [categories, setCategories] = useState([])
+  const [category, setCategory] = useState("")
   const [creationDate, setCreationDate] = useState("2020-01-01")
   const [author, setAuthor] = useState("")
   const [copyrightHolder, setCopyrightHolder] = useState("")
@@ -76,8 +76,8 @@ export default function Publish({ocean}) {
       <Information
         description={description}
         setDescription={setDescription}
-        categories={categories}
-        setCategories={setCategories}
+        categories={category}
+        setCategories={setCategory}
         creationDate={creationDate}
         setCreationDate={setCreationDate}
         />
@@ -94,7 +94,7 @@ export default function Publish({ocean}) {
         />
       )
   } else if (activeStep === 3){
-    const assetInfo = { title, files, description, categories, creationDate, author, copyrightHolder, license }
+    const assetInfo = { title, files, description, category, creationDate, author, copyrightHolder, license }
     activeStepComponent = (
       <Register
         ocean={ocean}
